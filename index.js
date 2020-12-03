@@ -5,7 +5,7 @@ const express    = require('express'),
       bodyParser = require('body-parser'),
       request    = require('request'),
       socket     = require('socket.io'),
-      app        = express().use(bodyParser.json());
+      app        = express();
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 
@@ -27,6 +27,9 @@ io.on('connection', function(socket) {
     callSendAPI(data.receiverID, {text: data.message})
   })
 })
+
+app.use('/webhook', bodyParser.json())
+app.use('/facebook-profile', bodyParser.json())
 
 app.post('/webhook', (req, res) => {
   const body = req.body
