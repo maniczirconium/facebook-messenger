@@ -178,7 +178,7 @@ function handleMessageReceived(webhook_event) {
       console.log("body:")
       console.log(body)
       response.message = webhook_event.message
-      response.sender = body
+      response.sender = JSON.parse(body)
       response.timestamp = webhook_event.timestamp
       response.recipient = webhook_event.timestamp
 
