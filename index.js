@@ -3,11 +3,12 @@
 const express    = require('express'),
       bodyParser = require('body-parser'),
       request    = require('request'),
+      socket     = require('socket.io'),
       app        = express().use(bodyParser.json());
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 
-app.listen(process.env.PORT || 1337, () => console.log('Webhook is listening: ' + process.env.PORT || 1337))
+const server = app.listen(process.env.PORT || 1337, () => console.log('Webhook is listening: ' + process.env.PORT || 1337))
 
 app.post('/webhook', (req, res) => {
   const body = req.body
@@ -48,6 +49,8 @@ app.get('/webhook', (req, res) => {
     res.sendStatus(403)
   }
 })
+
+app.use('/', express.static('public'))
 
 function handleMessage(sender_psid, received_message) {
   let response
@@ -125,3 +128,18 @@ function callSendAPI(sender_psid, response) {
     }
   })
 }
+
+// WEB SOCKETS
+const io = socket(server)
+
+io.on('connection', function(socket) {
+  console.log('Made socket connection', socket.id)
+
+  socket.on('chat', function(data) {
+    io.sockets.emit('chat', data)
+  })
+
+  socket.on('typing', function(data) {
+    socket.broadcast.emit('typing, data')
+  })
+})
