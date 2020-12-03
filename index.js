@@ -16,7 +16,7 @@ const io = socket(server, {
     allowedHeaders: ["my-custom-header"],
     credentials: true
   }
-}z)
+})
 
 app.post('/webhook', (req, res) => {
   const body = req.body
