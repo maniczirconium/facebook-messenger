@@ -24,7 +24,7 @@ io.on('connection', function(socket) {
 
   socket.on('chat', function(data) {
     console.log(data)
-    callSendAPI(data.receiverID, data.message)
+    callSendAPI(data.receiverID, {text: data.message})
   })
 })
 
@@ -142,7 +142,7 @@ function callSendAPI(sender_psid, response) {
     "recipient": {
       "id": sender_psid
     },
-    "message": response
+    "message": response                                    
   }
 
   request({
@@ -150,7 +150,7 @@ function callSendAPI(sender_psid, response) {
     "qs" : {
       "access_token": process.env.PAGE_ACCESS_TOKEN
     },
-    "method": "POST",
+    "method": "POST",                                                                                                                                                                                                                                                                   
     "json"  : request_body
   }, (err, res, body) => {
     if(!err) {
