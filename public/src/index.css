@@ -1,0 +1,413 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 100%;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #ddd;
+  margin: 0;
+}
+
+body.loading::before {
+  z-index: 999;
+}
+
+body.loading::after {
+  z-index: 1000;
+}
+
+.file-list {
+  list-style: none;
+  display: grid;
+  gap: 1em;
+  padding: 1em;
+  position: relative;
+
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.file-list.loading::before {
+  background-color: #ddd;
+}
+
+.file-list li {
+  display: grid;
+}
+
+.file-list li > * {
+  grid-column: 1/2;
+  grid-row: 1/2;
+}
+
+.file-list li a {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  background-color: #fafafa;
+  justify-content: stretch;
+  align-items: center;
+  border-radius: 0.5em;
+  overflow: hidden;
+  box-shadow: 0 5px 10px #0001;
+  border: 1px solid #0003;
+  text-decoration: none;
+  color: #333;
+}
+
+.file-list li a:hover,
+.file-list li a:focus {
+  border-color: dodgerblue;
+  box-shadow: 0 5px 10px #0001, 0 0 0 3px dodgerblue;
+}
+
+.file-thumbnail {
+  grid-column: 1/3;
+  grid-row: 1/2;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  align-self: stretch;
+}
+
+.file-name {
+  padding: 1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-icon {
+  margin: 1em;
+  margin-right: 0;
+}
+
+.file-menu {
+  font-size: 1em;
+  align-self: start;
+  justify-self: end;
+  border: none;
+  height: 3em;
+  width: 3em;
+  margin: 1em;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.file-list li:hover .file-menu {
+  opacity: 1;
+}
+
+.list--folder {
+  align-self: start;
+}
+
+.btn {
+  font-size: 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: dodgerblue;
+  padding: 1em;
+  border-radius: 0.25em;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 1ch;
+}
+
+.btn:hover {
+  background-color: #0001;
+}
+
+.btn:focus {
+  box-shadow: 0 0 0 3px;
+}
+
+.loading::before {
+  content: '';
+  position: absolute;
+  background-color: #fafafa;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 100px;
+  width: 100px;
+  border: 5px solid #1e90ff36;
+  border-top-color: dodgerblue;
+  border-radius: 100%;
+  transform: translate(-50%, -50%);
+  animation: loader 1s infinite;
+}
+
+@keyframes loader {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.toast {
+  background-color: #333;
+  color: #fafafa;
+  border-radius: 0.5em;
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
+  display: grid;
+  box-shadow: 0 8px 40px #0005;
+  transition: transform 300ms;
+  overflow: hidden;
+}
+
+.toast[aria-hidden="true"] {
+  transform: translateX(calc(100% + 2em + 8px));
+}
+
+.toast label {
+  padding: 1em;
+}
+
+.toast progress {
+  grid-row: 1/2;
+  appearance: none;
+  height: 0.35em;
+  background-color: #1e90ff61;
+  -webkit-appearance: none;
+  border: none;
+}
+
+.toast progress[value]::-moz-progress-bar {
+  background-color: dodgerblue;
+}
+
+.toast progress[value]::-webkit-progress-value {
+  background-color: dodgerblue;
+}
+
+.btn-primary {
+  background-color: dodgerblue;
+  color: white;
+  box-shadow: 0 3px 5px #0003;
+}
+
+.btn-primary:hover {
+  background-color: dodgerblue;
+  filter: brightness(1.25);
+}
+
+.btn-primary:active {
+  box-shadow: none;
+}
+
+.file-upload-control {
+  padding: 0.5em;
+  border: 2px dashed #0003;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+}
+
+#file-upload {
+  display: none;
+}
+
+[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.no-files-notice.js-no-files-notice {
+  text-align: center;
+  font-size: 2em;
+  opacity: 0.5;
+}
+
+
+.tablist ul{
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  background-color: #fafafa;
+  margin: 0;
+  position: sticky;
+  top: 0;
+  z-index: 99999;
+  box-shadow: 0 5px 15px #0003;
+}
+
+.tablist a {
+  text-decoration: none;
+  padding: 1em;
+  display: block;
+  color: dodgerblue;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 3px solid transparent;
+}
+
+.tablist a.active {
+  border-bottom-color: dodgerblue;
+}
+
+#new-email-popup {
+  position: fixed;
+  bottom: 0;
+  right: 1em;
+  min-width: 300px;
+  background-color: #fafafa;
+  border-radius: 0.5em 0.5em 0 0;
+  overflow: hidden;
+  width: 45vw;
+  box-shadow: 0 5px 15px #0002;
+}
+
+#new-email-popup:not(.shown) {
+  display: none;
+}
+
+#new-email-popup summary {
+  padding: 1em;
+  background-color: #1e90ffb5;
+  cursor: pointer;
+}
+
+#new-email-popup form {
+  padding: 1em;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  background-color: #0001;
+  padding: 0.25em 1em;
+  margin: 1px 0;
+}
+
+.form-group.column {
+  flex-direction: column;
+  align-items: stretch;
+  padding-top: 1em;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: 0;
+}
+
+.form-group:focus-within {
+  background-color: #0002;
+}
+
+.form-group input {
+  flex: 2;
+  appearance: none;
+  border: none;
+  padding: 1em;
+  background-color: transparent;
+  color: #333;
+}
+
+.form-group textarea {
+  font-size: 1em;
+  font-family: inherit;
+  padding-top: 1em;
+  border: 0;
+  appearance: none;
+  resize: none;
+  background: transparent;
+  min-height: 250px;
+}
+
+.buttons {
+  display: flex;
+  padding: 1em 0;
+  gap: 1em;
+}
+
+.buttons.buttons--right {
+  justify-content: end;
+}
+
+#new-email-popup form > :last-child {
+  padding-bottom: 0;
+}
+
+.btn.loading::before,
+.btn.loading::after {
+  content: none;
+}
+
+.btn.loading::before {
+  content: '';
+  position: static;
+  border-radius: 100%;
+  border: 3px solid #fff5;
+  border-top: 3px solid #fff;
+  animation: btnloader 1s infinite;
+  height: 1em;
+  width: 1em;
+}
+
+@keyframes btnloader {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btn.loading::before {
+  content: '';
+  position: static;
+  border-radius: 100%;
+  border: 3px solid #fff5;
+  border-top: 3px solid #fff;
+  animation: btnloader 1s infinite;
+  height: 1em;
+  width: 1em;
+  display: inline-block;
+  background: transparent;
+}
+
+#email_list {
+  list-style: none;
+  padding: 0;
+  margin: 1em;
+}
+
+#email_list li {
+  background-color: #fafafa;
+  padding: 1em;
+  border: 1px solid #0001;
+}
+
+#email_list li p {
+  margin: 0;
+  opacity: 0.75;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
