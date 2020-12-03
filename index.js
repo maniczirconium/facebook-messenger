@@ -214,7 +214,7 @@ const BotEvents = require('viber-bot').Events
 
 const bot = new ViberBot({
   authToken: '4c8a94e797000e8b-73260a5339832911-4dc23e2b449f2188',
-  name: 'EchoBot',
+  name: 'FR Track 1 Test',
   avatar: 'http://viber.com/avatar.jpg'
 })
 
