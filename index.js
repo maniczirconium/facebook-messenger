@@ -9,11 +9,7 @@ const express    = require('express'),
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 
 const server = app.listen(process.env.PORT || 1337, () => console.log('Webhook is listening: ' + process.env.PORT || 1337))
-const io = socket(server, {
-  cors: {
-    origin: '*'
-  }
-})
+const io = socket(server, { origins : '*:*'})
 
 app.post('/webhook', (req, res) => {
   const body = req.body
