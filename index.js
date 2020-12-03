@@ -211,8 +211,21 @@ app.post('/facebook-send', (req, res) => {
 /* VIBER */
 const ViberBot  = require('viber-bot').Bot
 const BotEvents = require('viber-bot').Events
+const winston   = require('winston')
+const toYAML    = require('winston-console-formatter')
 
+function createLogger() {
+  const logger = new winston.Logger({
+    level: "debug"
+  })
+
+  logger.add(winston.transports.Console, toYAML.config())
+  return logger
+}
+
+const logger = createLogger
 const bot = new ViberBot({
+  logger: logger,
   authToken: '4c8a94e797000e8b-73260a5339832911-4dc23e2b449f2188',
   name: 'FR Track 1 Test',
   avatar: 'http://viber.com/avatar.jpg'
