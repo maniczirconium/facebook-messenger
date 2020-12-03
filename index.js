@@ -172,7 +172,25 @@ function handleGetProfile(psid, fn) {
 }
 
 function handleMessageReceived(webhook_event) {
-  io.sockets.emit('chat', webhook_event)
+  handleGetProfile(webhook_event.sender.id, body => {
+    let response
+    if(body) {
+      response.message = webhook_event.message
+      response.sender = {
+        "first_name": body.first_name,
+        "last_name": body.last_name,
+        "profile_pic": body.profile_pic,
+        "id": body.id
+      }
+      response.timestamp = webhook_event.timestamp
+      response.recipient = webhook_event.timestamp
+
+      console.log(response)
+      io.sockets.emit('chat', response)
+    } else {
+
+    }
+  })
 }
 
 app.use(cors({ credentials: true, origin: true}))
