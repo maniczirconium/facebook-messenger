@@ -1,6 +1,7 @@
 'use strict'
 
 const express    = require('express'),
+      cors       = require('cors'),
       bodyParser = require('body-parser'),
       request    = require('request'),
       socket     = require('socket.io'),
@@ -139,4 +140,7 @@ function callSendAPI(sender_psid, response) {
   })
 }
 
-console.log(io.sockets.emit)
+app.use(cors({ credentials: true, origin: true}))
+app.post('/facebook-send', (req, res) => {
+  console.log(req.body)
+})
