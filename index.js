@@ -59,8 +59,13 @@ app.get('/facebook-profile', (request, response) => {
   const psid = request.query['psid']
 
   if(psid) {
-    handleGetProfile(psid)
-    res.sendStatus(200)
+    handleGetProfile(psid, body => {
+      if(body)
+        res.status(200).send(body)
+
+      else
+        res.status(404).send("NO_PROFILE_FOUND")
+    })
   } else {
     res.status(400).send('NO_PSID')
   }
@@ -147,7 +152,7 @@ function callSendAPI(sender_psid, response) {
   })
 }
 
-function handleGetProfile(psid) {
+function handleGetProfile(psid, fn) {
   request({
     "uri": `https://graph.facebook.com/${psid}`,
     "qs" : {
@@ -157,10 +162,11 @@ function handleGetProfile(psid) {
     "method": "GET"
   }, (err, res, body) => {
     if(!err) {
-      console.log(res)
       console.log(body)
+      fn(body)
     } else {
       console.error("Unable to retrieve profile: " + err)
+      fn(null)
     }
   })
 }
