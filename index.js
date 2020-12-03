@@ -68,7 +68,7 @@ function handleMessage(sender_psid, received_message) {
       "text": `You sent the message: "${received_message.text}". Now send me an image!`
     }
 
-    io.socket.emit('chat', { psid:sender_psid, message:received_message.text})
+    io.sockets.emit('chat', { psid:sender_psid, message:received_message.text})
   } else if(received_message.attachments) {
     let attachment_url = received_message.attachments[0].payload.url
     response = {
@@ -138,3 +138,5 @@ function callSendAPI(sender_psid, response) {
     }
   })
 }
+
+console.log(io.sockets.emit)
