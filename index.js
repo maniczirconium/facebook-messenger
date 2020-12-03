@@ -31,12 +31,6 @@ app.post('/webhook', (req, res) => {
       console.log(`Sender PSID: ${sender_psid}`)
     
       handleMessageReceived(webhook_event)
-
-      /*if(webhook_event.message) {
-        handleMessage(sender_psid, webhook_event.message)
-      } else if (webhook_event.postback) {
-        handlePostback(sender_psid, webhook_event.postback)
-      }*/
     })
 
     res.status(200).send('EVENT_RECEIVED')
@@ -58,6 +52,17 @@ app.get('/webhook', (req, res) => {
     res.status(200).send(challenge)
   } else {
     res.sendStatus(403)
+  }
+})
+
+app.get('/facebook-profile', (request, response) => {
+  const psid = request.query['psid']
+
+  if(psid) {
+    handleGetProfile(psid)
+    res.sendStatus(200)
+  } else {
+    res.status(400).send('NO_PSID')
   }
 })
 
@@ -133,6 +138,23 @@ function callSendAPI(sender_psid, response) {
     },
     "method": "POST",
     "json"  : request_body
+  }, (err, res, body) => {
+    if(!err) {
+      console.log("Message sent!")
+    } else {
+      console.error("Unable to send message: " + err)
+    }
+  })
+}
+
+function handleGetProfile(psid) {
+  request({
+    "uri": `https://graph.facebook.com/${psid}`,
+    "qs" : {
+      "access_token": process.env.PAGE_ACCESS_TOKEN,
+      "fields":"first_name,last_name,profile_pic"
+    },
+    "method": "GET"
   }, (err, res, body) => {
     if(!err) {
       console.log("Message sent!")
