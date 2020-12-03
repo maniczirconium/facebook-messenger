@@ -19,6 +19,14 @@ const io = socket(server, {
   }
 })
 
+io.on('connection', function(socket) {
+  console.log('Made socket connection', socket.id)
+
+  socket.on('chat', function(data) {
+    console.log(data)
+  })
+})
+
 app.post('/webhook', (req, res) => {
   const body = req.body
 
@@ -183,6 +191,7 @@ function handleMessageReceived(webhook_event) {
       response.recipient = webhook_event.timestamp
 
       console.log(response)
+
       io.sockets.emit('chat', response)
     } else {
       io.sockets.emit('chat', webhook_event)
