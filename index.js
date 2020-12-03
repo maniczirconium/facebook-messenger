@@ -11,6 +11,8 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 const server = app.listen(process.env.PORT || 1337, () => console.log('Webhook is listening: ' + process.env.PORT || 1337))
 const io = socket(server)
 
+io.set('origins', 'http://integration-test-rubio.herokuapp.com/');
+
 app.post('/webhook', (req, res) => {
   const body = req.body
 
@@ -131,17 +133,3 @@ function callSendAPI(sender_psid, response) {
     }
   })
 }
-
-// WEB SOCKETS
-
-io.on('connection', function(socket) {
-  console.log('Made socket connection', socket.id)
-
-  socket.on('chat', function(data) {
-    io.sockets.emit('chat', data)
-  })
-
-  socket.on('typing', function(data) {
-    socket.broadcast.emit('typing, data')
-  })
-})
