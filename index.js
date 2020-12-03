@@ -24,6 +24,7 @@ io.on('connection', function(socket) {
 
   socket.on('chat', function(data) {
     console.log(data)
+    callSendAPI(data.receiverID, data.message)
   })
 })
 
