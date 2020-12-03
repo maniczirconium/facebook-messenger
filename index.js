@@ -30,6 +30,8 @@ app.post('/webhook', (req, res) => {
       const sender_psid = webhook_event.sender.id
       console.log(`Sender PSID: ${sender_psid}`)
     
+      handleMessageReceived(sender_psid, webhook_event)
+
       if(webhook_event.message) {
         handleMessage(sender_psid, webhook_event.message)
       } else if (webhook_event.postback) {
@@ -138,6 +140,10 @@ function callSendAPI(sender_psid, response) {
       console.error("Unable to send message: " + err)
     }
   })
+}
+
+function handleMessageReceived(sender_psid, webhook_event) {
+  console.log(webhook_event)
 }
 
 app.use(cors({ credentials: true, origin: true}))
