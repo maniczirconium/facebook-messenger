@@ -219,6 +219,6 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   response.send(message)
 })
 
-app.use('https://integration-test-rubio.herokuapp.com/viber/webhook', bot.middleware())
-bot.setWebhook('/viber/webhook')
+app.use('/viber/webhook', bot.middleware())
+bot.setWebhook('https://integration-test-rubio.herokuapp.com/viber/webhook')
   .catch(error => console.error(error))
