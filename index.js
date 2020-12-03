@@ -9,6 +9,7 @@ const express    = require('express'),
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 
 const server = app.listen(process.env.PORT || 1337, () => console.log('Webhook is listening: ' + process.env.PORT || 1337))
+const io = socket(server)
 
 app.post('/webhook', (req, res) => {
   const body = req.body
@@ -59,6 +60,8 @@ function handleMessage(sender_psid, received_message) {
     response = {
       "text": `You sent the message: "${received_message.text}". Now send me an image!`
     }
+
+    io.socket.emit('chat', { psid:sender_psid, message:received_message.text})
   } else if(received_message.attachments) {
     let attachment_url = received_message.attachments[0].payload.url
     response = {
@@ -130,7 +133,6 @@ function callSendAPI(sender_psid, response) {
 }
 
 // WEB SOCKETS
-const io = socket(server)
 
 io.on('connection', function(socket) {
   console.log('Made socket connection', socket.id)
