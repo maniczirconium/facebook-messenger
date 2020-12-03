@@ -204,3 +204,21 @@ app.use(cors({ credentials: true, origin: true}))
 app.post('/facebook-send', (req, res) => {
   console.log(req.body)
 })
+
+/* VIBER */
+const ViberBot  = require('viber-bot').Bot
+const BotEvents = require('viber-bot').Events
+
+const bot = new ViberBot({
+  authToken: '4c8a8b07af8009ec-13f5a4496c7c8221-3fb92dc3061d4c28',
+  name: 'EchoBot',
+  avatar: 'http://viber.com/avatar.jpg'
+})
+
+bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
+  response.send(message)
+})
+
+app.use('https://integration-test-rubio.herokuapp.com/viber/webhook', bot.middleware())
+bot.setWebhook('/viber/webhook')
+  .catch(error => console.error(error))
