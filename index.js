@@ -4,6 +4,8 @@ const express    = require('express'),
       bodyParser = require('body-parser'),
       app        = express().use(bodyParser.json());
 
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
+
 app.listen(process.env.PORT || 1337, () => console.log('Webhook is listening: ' + process.env.PORT || 1337))
 
 app.post('/webhook', (req, res) => {
@@ -13,6 +15,9 @@ app.post('/webhook', (req, res) => {
     body.entry.forEach(entry =>  {
       const webhook_event = entry.messaging[0]
       console.log(webhook_event)
+
+      const sender_psid = webhook_event.sender.id
+      console.log(`Sender PSID: ${sender_psid}`)
     })
 
     res.status(200).send('EVENT_RECEIVED')
@@ -36,3 +41,9 @@ app.get('/webhook', (req, res) => {
     res.sendStatus(403)
   }
 })
+
+function handleMessage(sender_psid, received_message) {}
+
+function handlePostback(sender_psid, received_postback) {}
+
+function callSendAPI(sender_psid, response) {}
