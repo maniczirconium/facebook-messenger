@@ -11,12 +11,12 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 const server = app.listen(process.env.PORT || 1337, () => console.log('Webhook is listening: ' + process.env.PORT || 1337))
 const io = socket(server, {
   cors: {
-    origin: "https://example.com",
+    origin: "https://localhost:8000/",
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true
   }
-})
+}z)
 
 app.post('/webhook', (req, res) => {
   const body = req.body
