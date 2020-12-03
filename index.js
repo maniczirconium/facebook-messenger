@@ -211,21 +211,32 @@ app.post('/facebook-send', (req, res) => {
 /* VIBER */
 const ViberBot  = require('viber-bot').Bot
 const BotEvents = require('viber-bot').Events
+const winston   = require('winston')
+
+console.log(winston)
 
 const bot = new ViberBot({
-  authToken: '4c8a8b07af8009ec-13f5a4496c7c8221-3fb92dc3061d4c28',
+  authToken: '4c8a94e797000e8b-73260a5339832911-4dc23e2b449f2188',
   name: 'EchoBot',
   avatar: 'http://viber.com/avatar.jpg'
 })
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
+  console.log(message)
   response.send(message)
 })
 
 app.use('/viber/webhook', bot.middleware())
-app.post('/viber/webhook', (request, response) => {
-  console.log(request.body)
-  response.send(request)
+bot.setWebhook('https://integration-test-rubio.herokuapp.com/viber/webhook', {
+  "event_types":[
+     "delivered",
+     "seen",
+     "failed",
+     "subscribed",
+     "unsubscribed",
+     "conversation_started"
+  ],
+  "send_name": true,
+  "send_photo": true
 })
-bot.setWebhook('https://integration-test-rubio.herokuapp.com/viber/webhook')
   .catch(error => console.error(error))
