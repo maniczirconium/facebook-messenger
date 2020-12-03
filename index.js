@@ -224,16 +224,5 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 })
 
 app.use('/viber/webhook', bot.middleware())
-bot.setWebhook('https://integration-test-rubio.herokuapp.com/viber/webhook', {
-  "event_types":[
-     "delivered",
-     "seen",
-     "failed",
-     "subscribed",
-     "unsubscribed",
-     "conversation_started"
-  ],
-  "send_name": true,
-  "send_photo": true
-})
+bot.setWebhook('https://integration-test-rubio.herokuapp.com/viber/webhook')
   .catch(error => console.error(error))
