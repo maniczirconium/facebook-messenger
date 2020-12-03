@@ -61,13 +61,13 @@ app.get('/facebook-profile', (request, response) => {
   if(psid) {
     handleGetProfile(psid, body => {
       if(body)
-        res.status(200).send(body)
+        response.status(200).send(body)
 
       else
-        res.status(404).send("NO_PROFILE_FOUND")
+        response.status(404).send("NO_PROFILE_FOUND")
     })
   } else {
-    res.status(400).send('NO_PSID')
+    response.status(400).send('NO_PSID')
   }
 })
 
