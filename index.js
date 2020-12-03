@@ -30,13 +30,13 @@ app.post('/webhook', (req, res) => {
       const sender_psid = webhook_event.sender.id
       console.log(`Sender PSID: ${sender_psid}`)
     
-      handleMessageReceived(sender_psid, webhook_event)
+      handleMessageReceived(webhook_event)
 
-      if(webhook_event.message) {
+      /*if(webhook_event.message) {
         handleMessage(sender_psid, webhook_event.message)
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback)
-      }
+      }*/
     })
 
     res.status(200).send('EVENT_RECEIVED')
@@ -142,8 +142,8 @@ function callSendAPI(sender_psid, response) {
   })
 }
 
-function handleMessageReceived(sender_psid, webhook_event) {
-  console.log(webhook_event)
+function handleMessageReceived(webhook_event) {
+  io.sockets.emit('chat', webhook_event)
 }
 
 app.use(cors({ credentials: true, origin: true}))
