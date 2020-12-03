@@ -215,15 +215,17 @@ const winston   = require('winston')
 const toYAML    = require('winston-console-formatter')
 
 function createLogger() {
-  const logger = new winston.Logger({
-    level: "debug"
+  const logger = winston.createLogger({
+    level: "debug",
+    transports: [
+      new winston.transports.Console()
+    ]
   })
 
-  logger.add(winston.transports.Console, toYAML.config())
   return logger
 }
 
-const logger = createLogger
+const logger = createLogger();
 const bot = new ViberBot({
   logger: logger,
   authToken: '4c8a94e797000e8b-73260a5339832911-4dc23e2b449f2188',
