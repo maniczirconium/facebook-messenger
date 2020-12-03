@@ -173,7 +173,7 @@ function handleGetProfile(psid, fn) {
 
 function handleMessageReceived(webhook_event) {
   handleGetProfile(webhook_event.sender.id, body => {
-    let response
+    let response = {}
     if(body) {
       response.message = webhook_event.message
       response.sender = {
