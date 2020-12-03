@@ -211,9 +211,6 @@ app.post('/facebook-send', (req, res) => {
 /* VIBER */
 const ViberBot  = require('viber-bot').Bot
 const BotEvents = require('viber-bot').Events
-const winston   = require('winston')
-
-console.log(winston)
 
 const bot = new ViberBot({
   authToken: '4c8a94e797000e8b-73260a5339832911-4dc23e2b449f2188',
