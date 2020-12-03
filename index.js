@@ -154,15 +154,15 @@ function callSendAPI(sender_psid, response) {
 
 function handleGetProfile(psid, fn) {
   request({
-    "uri": `https://graph.facebook.com/${psid}`,
-    "qs" : {
-      "access_token": process.env.PAGE_ACCESS_TOKEN,
-      "fields":"first_name,last_name,profile_pic"
-    },
-    "method": "GET"
-  }, (err, res, body) => {
+      "uri": `https://graph.facebook.com/${psid}`,
+      "qs" : {
+        "access_token": process.env.PAGE_ACCESS_TOKEN,
+        "fields":"first_name,last_name,profile_pic"
+      },
+      "method": "GET"
+    }, (err, res, body) => {
     if(!err) {
-      console.log(body)
+      console.log("Profile retrieved:" + body)
       fn(body)
     } else {
       console.error("Unable to retrieve profile: " + err)
@@ -175,6 +175,8 @@ function handleMessageReceived(webhook_event) {
   handleGetProfile(webhook_event.sender.id, body => {
     let response = {}
     if(body) {
+      console.log("body:")
+      console.log(body)
       response.message = webhook_event.message
       response.sender = {
         "first_name": body.first_name,
@@ -188,7 +190,7 @@ function handleMessageReceived(webhook_event) {
       console.log(response)
       io.sockets.emit('chat', response)
     } else {
-
+      io.sockets.emit('chat', webhook_event)
     }
   })
 }
