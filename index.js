@@ -157,9 +157,10 @@ function handleGetProfile(psid) {
     "method": "GET"
   }, (err, res, body) => {
     if(!err) {
-      console.log("Message sent!")
+      console.log(res)
+      console.log(body)
     } else {
-      console.error("Unable to send message: " + err)
+      console.error("Unable to retrieve profile: " + err)
     }
   })
 }
