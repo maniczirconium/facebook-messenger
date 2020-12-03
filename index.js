@@ -88,7 +88,19 @@ function handleMessage(sender_psid, received_message) {
   callSendAPI(sender_psid, response)
 }
 
-function handlePostback(sender_psid, received_postback) {}
+function handlePostback(sender_psid, received_postback) {
+  let response;
+
+  let payload = received_postback.payload
+
+  if(payload === 'yes') {
+    response = { "text": "Thanks!" }
+  } else if (payload === 'no') {
+    response = { "text": "Oops, try sending another image."}
+  }
+
+  callSendAPI(sender_psid, response)
+}
 
 function callSendAPI(sender_psid, response) {
   let request_body = {
