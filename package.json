@@ -1,0 +1,23 @@
+{
+  "name": "facebook-messenger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maniczirconium/facebook-messenger.git"
+  },
+  "author": "Francis Rubio <devFrancisRubio@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maniczirconium/facebook-messenger/issues"
+  },
+  "homepage": "https://github.com/maniczirconium/facebook-messenger#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  }
+}
